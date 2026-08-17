@@ -1,6 +1,6 @@
 # 🤖 Quantum AI Crypto Trading Engine — System Information & Architecture Guide
 
-> **Guide**: *Imagine you are running a high-tech mission control room for trading cryptocurrencies. Instead of one human trying to read thousands of charts, news articles, and price tickers every second, a team of specialized AI robots works together as your expert advisors, guarded by an unbreakable digital safety lock.*
+> **Guide**: *Imagine you are running a high-tech mission control room for trading cryptocurrencies. Instead of one human trying to read thousands of charts, news articles, and price tickers every second, a team of specialized AI robots works together as your expert advisors, guarded by an unbreakable digital safety lock and a strict financial risk controller.*
 
 ---
 
@@ -8,45 +8,51 @@
 1. [What is This System? (The Big Picture)](#1-what-is-this-system-the-big-picture)
 2. [Key Concepts Made Simple](#2-key-concepts-made-simple)
 3. [The "Team of Experts": Multi-Agent AI Architecture](#3-the-team-of-experts-multi-agent-ai-architecture)
-4. [The 6-Step Journey of a Trade Signal](#4-the-6-step-journey-of-a-trade-signal)
+4. [The 7-Step Journey of a Trade Signal](#4-the-7-step-journey-of-a-trade-signal)
 5. [Multi-Timeframe Analysis (MTFA) Demystified](#5-multi-timeframe-analysis-mtfa-demystified)
 6. [The 18 Technical Indicators Explained](#6-the-18-technical-indicators-explained)
 7. [10 Macro Patterns & 9 Candlestick Patterns](#7-10-macro-patterns--9-candlestick-patterns)
 8. [Smart Money Concepts (SMC / ICT) & Elliott Wave Theory](#8-smart-money-concepts-smc--ict--elliott-wave-theory)
 9. [The 20 Deterministic Strategies & Consensus Math](#9-the-20-deterministic-strategies--consensus-math)
-10. [The Unbreakable Digital Shield: The 7 Risk Rules](#10-the-unbreakable-digital-shield-the-7-risk-rules)
-11. [System Blueprint & Directory Map](#11-system-blueprint--directory-map)
-12. [The Web Dashboard, Interactive Trade Placement & User Experience](#12-the-web-dashboard-interactive-trade-placement--user-experience)
-13. [Summary Cheat Sheet & FAQ](#13-summary-cheat-sheet--faq)
+10. [The Unbreakable Digital Shield: The 8 Risk Rules](#10-the-unbreakable-digital-shield-the-8-risk-rules)
+11. [Money & Risk Management Demystified](#11-money--risk-management-demystified)
+12. [System Blueprint & Directory Map](#12-system-blueprint--directory-map)
+13. [The Web Dashboard, Risk Control Center & User Experience](#13-the-web-dashboard-risk-control-center--user-experience)
+14. [Summary Cheat Sheet & FAQ](#14-summary-cheat-sheet--faq)
 
 ---
 
 ## 1. What is This System? (The Big Picture)
 
-The **Multi-Agent AI Crypto Trading & Market Analysis Engine** is an automated, real-time computer software system written in **Python 3.11+**. Its purpose is to monitor cryptocurrency markets (such as Bitcoin, Ethereum, and Solana) 24/7, analyze real-time market data across multiple time horizons (`15m`, `1h`, `4h`), coordinate specialist AI agents, test strategy consensus, and calculate precise, risk-guarded trade setups.
+The **Multi-Agent AI Crypto Trading & Market Analysis Engine** is an automated, real-time computer software system written in **Python 3.11+**. Its purpose is to monitor cryptocurrency markets (such as Bitcoin, Ethereum, and Solana) 24/7, analyze real-time market data across multiple time horizons (`15m`, `1h`, `4h`), coordinate specialist AI agents, test strategy consensus, calculate exact exchange fees, enforce money management rules, and calculate precise, risk-guarded trade setups.
 
 ### 🌟 Real-World Analogy: The Formula 1 Racing Team
 Think of this system like a world championship **Formula 1 Racing Team**:
-* **The Telemetry Sensors (CCXT, Binance & CoinGecko APIs)** measure the car's tire pressure, engine temperature, track humidity, and lap speed in real time across multiple intervals.
+* **The Telemetry Sensors (CCXT, Binance & CoinGecko APIs)** measure the car's tire pressure, engine temperature, track humidity, and lap speed in real time across multiple intervals (`15m`, `1h`, `4h`).
 * **The Specialist Engineers (Specialist AI Agents)** each focus on one discipline:
   * *Telemetry Engineer*: Multi-timeframe chart indicators and candlestick formations.
   * *Weather Forecaster*: Breaking news sentiment and macroeconomic catalysts.
   * *Chassis Inspector*: Token fundamental health and developer activity.
   * *Tire & Fuel Strategist*: Futures open interest, funding rates, and liquidation risk.
 * **The Chief Race Strategist (Master Trading Coordinator AI)** gathers all specialist reports, reviews the user's risk appetite, and drafts an optimal race and pit-stop strategy.
-* **The Chief Safety Inspector (LLM Risk Reviewer AI & Hard Risk Gate)** has the ultimate veto power: if any safety parameter is violated (low fuel, engine overheating, high crash probability), the race plan is **instantly blocked** to protect capital.
-* **The Driver's Cockpit Dashboard (FastAPI & WebSockets)** streams live glowing telemetry dials, multi-timeframe cards, and interactive execution buttons to the team boss (you!).
+* **The Pit-Stop Accountant (Binance Fee Engine)** calculates the exact fuel costs and tire wear (exchange fees, BNB discounts, and slippage) to ensure the pit stop won't cost more than the race victory payout.
+* **The Chief Safety Inspector (LLM Risk Reviewer AI & 8-Rule Hard Risk Gate)** has ultimate veto power: if any safety parameter is violated (engine overheating, crash probability, negative mathematical expectancy), the race plan is **instantly blocked** to protect capital.
+* **The Financial Controller (Money & Risk Manager)** tracks bankroll equity, allocates exact betting sizes via the Kelly Criterion, prevents over-leveraging, and logs every lap to the persistent database.
+* **The Driver's Cockpit Dashboard (FastAPI & WebSockets)** streams live glowing telemetry dials, portfolio risk meters, and interactive execution buttons to the team boss (you!).
 
 ```mermaid
 flowchart TD
     A["🌍 Real-Time Market Ingestion<br/>(Binance Spot/Futures via CCXT, CoinGecko, crypto.news)"] --> B["⏱️ Multi-Timeframe Engine<br/>(15m Trigger, 1h Setup, 4h Macro Trend)"]
     B --> C["🤖 Specialist AI Team<br/>(Tech, News, Fundamentals, Derivatives)"]
     C --> D["🎯 20 Strategies Consensus Engine<br/>(Requires 60% Weight & >= 5 Agreeing)"]
-    D --> E["🧠 Master Coordinator AI<br/>(Entry, TP, SL, R:R, Position Sizing Math)"]
+    D --> E["🧠 Master Coordinator AI<br/>(Entry, TP, SL, R:R, Safe Leverage)"]
     E --> F["🕵️ Independent Risk Reviewer<br/>(Devil's Advocate AI Validation)"]
-    F --> G["🛡️ Hard Risk Gate Guard<br/>(7 Deterministic Code-Level Safety Rules)"]
-    G -->|Passed (All 7 Rules OK)| H["🚀 Executable Signal & Interactive Order Modal"]
-    G -->|Blocked (Violations Found)| I["🛑 Blocked Signal (Logs Reasons for Safety)"]
+    F --> G["⚡ Binance Fee Engine<br/>(VIP-0 Fees, BNB Discounts, Net Expectancy)"]
+    G --> H["🛡️ Hard Risk Gate Guard<br/>(8 Deterministic Code-Level Safety Rules)"]
+    H -->|Passed (All 8 Rules OK)| I["🚀 Executable Signal & Interactive Order Modal"]
+    H -->|Blocked (Violations Found)| J["🛑 Blocked Signal (Logs Reasons for Safety)"]
+    I --> K["💼 Money & Risk Management Audit<br/>(Capital, Kelly Sizing, Exposure Caps)"]
+    K --> L["💾 Database Recording & Execution"]
 ```
 
 ---
@@ -55,26 +61,29 @@ flowchart TD
 
 Here are simple, clear explanations of key trading and crypto concepts:
 
-| Term | Grade 10 Explanation | Real-Life Comparison |
+| Term | Plain English Explanation | Real-Life Comparison |
 |---|---|---|
 | **Cryptocurrency** | Digital money secured by cryptography (e.g., BTC, ETH, SOL). | Digital tokens or digital gold traded on open global markets. |
-| **Spot Market** | Buying the actual underlying coin. You only make a profit if the price goes **UP**. | Buying a physical collector's card and holding it until its price rises. |
+| **Spot Market** | Buying the actual underlying coin. You only make a profit if the price goes **UP**. | Buying a physical collector's item and holding it until its price rises. |
 | **Perpetual Futures** | A derivatives contract enabling you to profit whether the price goes **UP** (Long) or **DOWN** (Short). | Placing a contract on whether tomorrow's temperature will be higher or lower. |
 | **Buy / Long** | Opening a position expecting the market price to **increase**. | Buying inventory before high demand season. |
-| **Sell / Short** | Opening a position expecting the market price to **decrease**. | Borrowing a video game to sell at $60, buying it back at $20, and keeping the $40 difference. |
-| **Leverage (e.g., 5x, 10x)** | Multiplying your position size using borrowed funds. | Riding a bicycle (1x) vs. driving a turbocharged sports car (10x). Speed multiplies, but mistakes are magnified! |
-| **Margin / Bet Amount** | The actual cash amount of your own money placed on a single trade (e.g., $10 USD). | Your stake in a single round of a game. |
+| **Sell / Short** | Opening a position expecting the market price to **decrease**. | Borrowing an item to sell at $60, buying it back at $20, and keeping the $40 difference. |
+| **Leverage (e.g., 5x, 10x)** | Multiplying your position size using borrowed funds. | Riding a bicycle (1x) vs. driving a turbocharged racecar (10x). Speed multiplies, but mistakes are magnified! |
+| **Margin / Bet Amount** | The actual cash collateral of your own money placed on a single trade (e.g., $10 USD). | Your cash deposit in a transaction. |
 | **Position Size** | Total purchasing power of the trade ($\text{Margin} \times \text{Leverage}$). | Putting down a $10 deposit to control a $100 piece of equipment at 10x leverage. |
-| **Entry Price** | The exact price at which a trade is opened. | The ticket price when boarding a train. |
-| **Take-Profit (TP)** | An automatic order that sells when the price hits your target profit goal. | Ringing the cash register to lock in your winnings. |
-| **Stop-Loss (SL)** | An automatic emergency brake that sells if the market drops to a specific level, capping losses. | An airbag in a vehicle that stops a small bump from becoming a catastrophe. |
+| **Maker vs. Taker Fees** | Fees charged by the exchange. Maker adds liquidity (limit orders), Taker takes liquidity (market orders). | Wholesale discount (Maker) vs. retail convenience fee (Taker). |
+| **BNB Fee Discount** | Binance discounts fees by 25% (Spot) and 10% (Futures) when paying fees in BNB token. | Using a loyalty rewards card at checkout for instant cash discounts. |
+| **Execution Slippage** | The slight price difference between when an order is submitted and when it fills. | Ordering a cab that estimates $10.00 but ends up costing $10.02 due to traffic. |
+| **Fee Drag %** | The percentage of your gross profits that gets eaten up by exchange trading fees. | Income tax taken out of your paycheck. |
+| **Net vs. Gross Profit** | Gross Profit is your raw market gain. Net Profit is what you actually keep after subtracting all exchange fees. | Revenue vs. Take-home profit after all expenses. |
+| **Fixed Fractional Sizing** | Risking a fixed percentage of your total bankroll (e.g. 1% or 2%) on each trade. | Never wagering more than $20 out of a $1,000 savings account on a single turn. |
+| **Kelly Criterion** | A famous mathematical formula that calculates the optimal bet percentage to maximize long-term wealth without going broke. | A smart GPS for your betting money that tells you exactly how much gas to give. |
 | **Risk-to-Reward (R:R)** | Comparing how much money you risk losing vs. how much you stand to gain (e.g., 1:2 or 1:3). | Risking $5 of lunch money to potentially gain $15. |
 | **Multi-Timeframe Analysis** | Checking 3 different zoom levels (`15m`, `1h`, `4h`) to ensure the big picture and small picture agree. | Checking regional weather, track temperature, and immediate cloud cover before racing. |
 | **Liquidation** | In futures trading, if the market moves too far against your position, the exchange closes it to prevent debt. | An automatic game over when your health bar hits zero. |
 | **Funding Rate** | Periodic fee exchanged between Long and Short traders to keep futures prices tethered to spot prices. | A balancing fee paid between people betting up vs. down. |
-| **Open Interest (OI)** | Total number of outstanding active futures contracts that have not been settled. | Total number of active tickets in play across an arena. |
-| **Order Block (OB)** | The last opposing candlestick before a massive institutional price expansion. | The footprint left in the sand by a giant walking on the beach. |
-| **Fair Value Gap (FVG)** | A 3-candle price imbalance where price moved so violently that orders were left unfilled. | A sudden gap in a fence that price often returns to fill. |
+| **Open Interest (OI)** | Total number of outstanding active futures contracts that have not been settled. | Total number of active tickets in play across an entire arena. |
+| **Maximum Drawdown (DD%)** | The largest percentage drop from a peak in your account balance to a trough. | The deepest valley you drove through on a mountain road trip. |
 
 ---
 
@@ -105,7 +114,8 @@ graph LR
 
     subgraph RiskSecurity ["4. Risk & Safety Guard"]
         R1["🕵️ Independent Risk Reviewer"]
-        G1["🛡️ 7-Rule Hard Risk Gate"]
+        F1["⚡ Binance Fee Engine"]
+        G1["🛡️ 8-Rule Hard Risk Gate"]
     end
 
     D1 --> A1
@@ -120,7 +130,8 @@ graph LR
     A4 --> C2
 
     C2 --> R1
-    R1 --> G1
+    R1 --> F1
+    F1 --> G1
 ```
 
 ### 1. 📊 The Technical Analysis Agent (`agents/tech_agent.py`)
@@ -131,48 +142,32 @@ graph LR
 ### 2. 📰 The Market News & Sentiment Agent (`agents/news_agent.py` & `crawler.py`)
 * **Role**: The "News Detective".
 * **What it does**: Continuously monitors news feeds (via RSS feeds and sitemaps), stores articles in the Supabase database, and evaluates the sentiment of recent headlines using AI.
-* **Why it matters**: A coin might have a perfect technical chart, but breaking negative regulatory news or security exploits could cause an immediate crash. The News Agent flags these catalysts.
-* **Output**: A sentiment score from `-1.0` (extreme fear/panic) to `+1.0` (extreme optimism/euphoria) with key headline summaries.
+* **Output**: A sentiment score from `-1.0` (panic) to `+1.0` (euphoria) with key headline summaries.
 
 ### 3. 🪙 The Fundamental Analysis Agent (`agents/fund_agent.py` & `fundamentals.py`)
 * **Role**: The "Tokenomics Auditor".
 * **What it does**: Inspects CoinGecko data to score the underlying token's health (0 to 100).
-* **Metrics It Evaluates**:
-  * **Market Cap Rank**: Is it an established Top 10 giant or a highly volatile micro-cap?
-  * **Volume-to-Market Cap Ratio**: Is there genuine trading liquidity?
-  * **Fully Diluted Valuation (FDV) Ratio**: Is there significant token unlock inflation ahead?
-  * **Developer Commits (GitHub)**: Are software engineers actively building and committing code?
+* **Metrics It Evaluates**: Market Cap Rank, Volume-to-MC Ratio, Fully Diluted Valuation (FDV) inflation, and GitHub developer commit activity.
 * **Output**: A fundamental score out of 100 with tokenomics insights.
 
 ### 4. ⚡ The Futures Derivatives Agent (`agents/futures_agent.py`)
 * **Role**: The "Crowd & Liquidity Watcher".
-* **What it does**: Analyzes professional derivatives metrics directly from Binance Futures.
-* **Key Metrics**:
-  * **8-Hour Funding Rate**: Are traders excessively long (paying high funding) or excessively short?
-  * **24h Open Interest (OI) Change**: Is fresh institutional capital entering or leaving the market?
-  * **Long/Short Account Ratio**: What percentage of market participants are positioned long vs. short?
-  * **Estimated Liquidation Distance**: How far away is the liquidation price from the current mark price?
+* **What it does**: Analyzes professional derivatives metrics directly from Binance Futures (8h Funding Rate, 24h Open Interest change, Long/Short ratio, and liquidation distance).
 * **Output**: Identifies crowd positioning traps and calculates safe leverage recommendations.
 
 ### 5. 🧠 The Master Trading Coordinator (`agents/coordinator.py`)
 * **Role**: The "Chief Race Strategist".
-* **What it does**: Collates all specialist reports, evaluates the strategy consensus, incorporates user risk settings, and computes exact trade mathematics:
-  * **Action**: `BUY_LONG`, `SELL_SHORT`, or `HOLD`
-  * **Entry Price, Take-Profit Price, and Stop-Loss Price**
-  * **Risk-to-Reward Ratio (R:R)**
-  * **Position Sizing Math**: Exact dollar risk at Stop-Loss and exact dollar profit at Take-Profit based on the user's margin bet (e.g., $10 USD).
-  * **Safe Leverage Recommendation**: Max safe leverage keeping liquidation ≥ 15% away and safely beyond the Stop-Loss.
+* **What it does**: Collates all specialist reports, evaluates the strategy consensus, incorporates user risk settings, and computes exact trade geometry: Entry, Take-Profit, Stop-Loss, Gross R:R, and safe leverage.
 
 ### 6. 🕵️ The Independent Risk Reviewer (`agents/risk_reviewer.py`)
 * **Role**: The "Devil's Advocate".
-* **What it does**: An independent AI agent that inspects the Coordinator's trade draft. It checks for cross-agent contradictions (e.g., "Why initiate a Long if the News Agent detected heavy negative sentiment and Futures funding is extreme?").
-* **Output**: Approves or rejects the trade proposal and adjusts the final confidence score.
+* **What it does**: An independent AI agent that inspects the Coordinator's trade draft. It checks for cross-agent contradictions (e.g., "Why go long if sentiment is in extreme fear and funding is overheated?").
 
 ---
 
-## 4. The 6-Step Journey of a Trade Signal
+## 4. The 7-Step Journey of a Trade Signal
 
-The lifecycle of how market data transforms into an executable signal in `pipeline.py`:
+The complete lifecycle of how raw market data transforms into an executable, risk-guarded trade:
 
 ```mermaid
 sequenceDiagram
@@ -184,7 +179,10 @@ sequenceDiagram
     participant Cons as 🎯 20 Strategies Consensus
     participant Coord as 🧠 AI Coordinator
     participant Rev as 🕵️ Risk Reviewer AI
+    participant Fee as ⚡ Binance Fee Engine
     participant Gate as 🛡️ Hard Risk Gate
+    participant Risk as 💼 Money & Risk Manager
+    participant DB as 💾 Supabase Database
     participant UI as 💻 Live Web Dashboard
 
     User->>Pipe: Request Analysis (e.g. BTCUSDT, R:R=2.0, Bet=$10, Lev=10x)
@@ -208,15 +206,22 @@ sequenceDiagram
     Pipe->>Rev: Validate Trade Plan independently
     Rev-->>Pipe: Review Approved / Concerns / Adjusted Confidence
 
-    Pipe->>Gate: Test against the 7 Deterministic Hard Risk Rules
-    alt All 7 Rules Pass
-        Gate-->>Pipe: PASSED (Executable = True, Violations = [])
+    Pipe->>Fee: Compute Binance VIP-0 Fees, BNB Discounts & Net Expectancy
+    Fee-->>Pipe: Return Net Target Profit, Net Max Risk, Net R:R, Fee Drag %
+
+    Pipe->>Gate: Test against the 8 Deterministic Hard Risk Rules
+    alt All 8 Rules Pass
+        Gate-->>Pipe: PASSED (Executable = True, Net R:R OK)
     else Any Rule Fails
         Gate-->>Pipe: BLOCKED (Executable = False + Violation Descriptions)
     end
 
-    Pipe->>UI: Stream live signal & MTFA details via WebSocket
-    UI-->>User: Display glowing card + Place Trade execution modal
+    Pipe->>UI: Stream live signal & MTFA cards via WebSocket
+    User->>UI: Click "🎯 Place Trade"
+    UI->>Risk: Execute Pre-Trade Risk Audit (Capital, Leverage, Concentration)
+    Risk-->>UI: Audit Passed
+    UI->>DB: Save Placed Trade with Order ID & Fee Metrics
+    DB-->>UI: Return Order Receipt & Update Portfolio Telemetry
 ```
 
 ---
@@ -359,13 +364,13 @@ In [`strategies.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot
 
 ---
 
-## 10. The Unbreakable Digital Shield: The 7 Risk Rules
+## 10. The Unbreakable Digital Shield: The 8 Risk Rules
 
 Located in [`risk_gate.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/risk_gate.py), the Hard-Risk Gate is a deterministic code-level barrier with **zero AI involvement**:
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        🛡️ THE 7 HARD-RISK RULES & PROTECTION MATRIX                    │
+│                        🛡️ THE 8 HARD-RISK RULES & PROTECTION MATRIX                    │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
 │ RULE 1: Direction Alignment    │ Spot trades cannot be SELL_SHORT. Spot is long-only.  │
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
@@ -375,7 +380,7 @@ Located in [`risk_gate.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-cry
 │ RULE 3: Stochastic Guard       │ Block BUY_LONG if %K > 85.0 (overbought rejection).   │
 │                                │ Block SELL_SHORT if %K < 15.0 (oversold bounce risk). │
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
-│ RULE 4: Minimum R:R Threshold  │ Trade MUST achieve at least 1.5:1 (or user target R:R)│
+│ RULE 4: Minimum Gross R:R      │ Trade MUST achieve at least 1.5:1 (or user target R:R)│
 │                                │ reward-to-risk ratio.                                 │
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
 │ RULE 5: Strict Price Order     │ Longs must satisfy: Stop-Loss < Entry < Take-Profit.  │
@@ -387,29 +392,69 @@ Located in [`risk_gate.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-cry
 │                                │ 6c. Block trades betting against extreme funding rate.│
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
 │ RULE 7: HOLD Safety Guard      │ HOLD decisions are never marked executable.           │
+├────────────────────────────────┼───────────────────────────────────────────────────────┤
+│ RULE 8: Binance Fee & Net      │ 8a. Net Risk-to-Reward ratio must be >= 1.80 : 1      │
+│         Expectancy Guard       │ 8b. Net Expected Value (EV) must be positive (> $0)   │
+│                                │ 8c. Fee drag cannot consume > 25% of gross profit.    │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 11. System Blueprint & Directory Map
+## 11. Money & Risk Management Demystified
+
+### Why Capital Management Beats Prediction
+In trading, you can have a 70% win rate and still go completely broke if you risk too much on the 30% of trades that lose. The system's **Money Risk Manager** (`risk_manager.py`) ensures you survive losing streaks and compound gains safely:
+
+1. **Fixed Fractional Position Sizing**:
+   * Instead of guessing how much to bet, the system works backwards from your **Stop-Loss distance**:
+   * If your account is **$10,000** and you set a **2% risk ($200)**:
+     * If the Stop-Loss is **2% away**, your total position size is $\frac{\$200}{0.02} = \$10,000$.
+     * At **10x leverage**, your required margin deposit is just **$1,000**.
+     * If Stop-Loss hits, you lose **exactly $200 (2%)**—never more!
+
+2. **The Kelly Criterion Formula**:
+   * The system calculates the optimal fraction of your bankroll to wager based on historical win rates and payout ratios:
+   * **Half-Kelly** is used as the safe institutional standard to prevent excessive volatility while maximizing geometric growth.
+
+3. **Exchange Fee Protection & Fee Traps**:
+   * On Binance Futures, fees are charged on the **leveraged position size**, not your margin deposit.
+   * If you trade with high leverage on small price moves, exchange fees can silently eat all your profits.
+   * The **Fee Engine** tests every trade before execution. If fees consume more than **25% of the gross profit**, the trade is flagged and blocked as a **Fee Trap**.
+
+4. **Pre-Trade 8-Point Audit**:
+   * Before placing an order, the system checks:
+     1. Is the action legal on this market?
+     2. Are Stop-Loss and Take-Profit in valid mathematical order?
+     3. Have we reached the maximum number of concurrent open positions (e.g. 5)?
+     4. Are we already holding 2 trades in this specific coin?
+     5. Do we have enough available cash margin?
+     6. Does this new trade breach our total portfolio leverage cap (e.g. 10x)?
+     7. Does the dollar risk exceed our risk budget?
+     8. Is the Net R:R at least 1.8:1 after all Binance fees and slippage?
+
+---
+
+## 12. System Blueprint & Directory Map
 
 ```text
 my-ai-crypto-bot/
 ├── main.py               # 🚀 Application Launcher & CLI Single-Shot Runner
 ├── server.py             # 🌐 FastAPI Web Server, Auth APIs, WebSocket Streamer & UI
 ├── pipeline.py           # 🔄 Master Pipeline Orchestrator (Multi-TF data coordination)
-├── risk_gate.py          # 🛡️ Hard-Coded 7-Rule Safety Gate Guard
-├── config.py             # ⚙️ Settings, Risk Thresholds, MTFA Config, Monitored Coins
-├── models.py             # 📋 Pydantic v2 Data Models, MTFA Reports & Schemas
-├── database.py           # 💾 Supabase Cloud Database Manager (Articles & Signals)
+├── risk_manager.py       # 💼 Money & Risk Management Engine (Position sizing, Kelly, Risk audit)
+├── fee_calculator.py     # ⚡ Binance VIP-0 Fees, BNB Discounts, Slippage & Net Expectancy
+├── risk_gate.py          # 🛡️ Hard-Coded 8-Rule Safety Gate Guard
+├── config.py             # ⚙️ Settings, Risk Thresholds, Fee Rates, MTFA Config, Monitored Coins
+├── models.py             # 📋 Pydantic v2 Data Models (TradeSignal, PlacedTrade, PortfolioMetrics)
+├── database.py           # 💾 Supabase Cloud Database Manager (Articles, Signals, Trades)
 ├── ccxt_client.py        # 📡 CCXT Binance Market Data Client (Spot, Futures, Parallel TFs)
 ├── indicators.py         # 📐 18 Indicators, 10 Macro Patterns, 9 Candlestick Detectors, MTFA
 ├── market_structure.py   # 🏛️ Deterministic SMC/ICT & Elliott Wave Impulse Analyzer
 ├── fundamentals.py       # 🪙 CoinGecko Scraper & 0-100 Fundamental Health Scorer
 ├── crawler.py            # 🕷️ Async News Scraper (crypto.news RSS & Sitemap Discovery)
 ├── strategies.py         # 🎯 20 Deterministic Strategies & Consensus Engine
-├── schema.sql            # 🗄️ Supabase PostgreSQL schema definitions
+├── schema.sql            # 🗄️ Supabase PostgreSQL schema definitions (articles, signals, trades)
 ├── requirements.txt      # 📦 Project Python dependencies
 ├── agents/               # 🤖 Specialist AI Agents
 │   ├── __init__.py       # Package init
@@ -420,43 +465,41 @@ my-ai-crypto-bot/
 │   ├── fund_agent.py     # 🪙 Fundamental Quality Agent
 │   ├── futures_agent.py  # ⚡ Futures Derivatives Agent
 │   └── risk_reviewer.py  # 🕵️ Independent Risk Review Agent
-└── tests/                # 🧪 Automated Test Suite
+└── tests/                # 🧪 Automated Test Suite (57 Passing Tests)
     ├── __init__.py
-    └── test_regressions.py # 39 Comprehensive Regression & Unit Tests
+    ├── test_regressions.py   # 41 Multi-agent, MTFA, indicator, model & system regression tests
+    ├── test_fee_calculator.py # 8 Binance fee, BNB discount & net expectancy unit tests
+    └── test_risk_manager.py   # 8 Position sizing, Kelly criterion & risk audit unit tests
 ```
 
 ---
 
-## 12. The Web Dashboard, Interactive Trade Placement & User Experience
+## 13. The Web Dashboard, Risk Control Center & User Experience
 
 The web dashboard (`server.py`) provides an interactive command center directly in your web browser:
 
 1. **🔒 Secure Authentication**: Protected with username and password verification configured via `.env`.
-2. **⚡ Real-Time WebSocket Streaming (`/ws`)**: Price movements, scan updates, and multi-timeframe AI trade signals appear automatically without page refreshes.
-3. **🎛️ Interactive Risk & Position Sizing Controls**:
-   * Set your **Target Minimum Risk-to-Reward Ratio** (e.g., 2.0x, 3.0x).
-   * Set your **Margin Bet Amount in USD** (e.g., $10 USD default).
-   * Choose your preferred **Leverage** (or let the AI suggest the optimal safe leverage).
-4. **🔍 Live Instant Search**: Search any coin among Top 50 monitored pairs with real-time UI filtering.
-5. **🎯 Interactive "Place Trade" Execution Modal**:
-   * Click **"🎯 Place Trade"** on any actionable card to open the order confirmation modal.
-   * View live calculations for **Margin Bet ($)**, **Leverage**, **Position Size ($)**, **Max Risk (-$Risk)**, **Target Profit (+$Profit)**, and **Estimated ROI %**.
-   * Inspect individual **15m, 1h, and 4h Timeframe Cards** (Bias, Trend, RSI) and the **Confluence Badge**.
-   * Click **"Confirm & Place Trade"** to execute order placement via `POST /api/place-trade` and generate an instant order receipt.
-6. **🔬 Deep Dive Inspection Modal**: Click on any signal card to open a multi-tab inspection modal showing indicator breakdowns, tokenomics, news sentiment, and risk reviewer feedback.
-7. **📰 News Scraper Control**: Trigger on-demand news crawls directly from the web interface.
-8. **🔒 Logout Control**: One-click logout locks the control center.
+2. **🎛️ Dual-Tab Navigation Bar**:
+   - **Market Signals Tab**: Real-time scanner, multi-agent signal cards, search bar, and trade placement.
+   - **Money & Risk Management Tab**: Portfolio capital telemetry, dynamic position sizing calculator, placed trades database table, manual position closure, and risk limit settings.
+3. **⚡ Real-Time WebSocket Streaming (`/ws`)**: Price movements, scan updates, trade executions, and news crawler alerts stream without page refreshes.
+4. **📊 6-Column Portfolio Risk Telemetry**: Live dials displaying Account Balance, Available Margin, Margin Utilization %, Open Risk Exposure ($ and %), Net Realized PnL, Win Rate %, Net Profit Factor, Kelly Sizing %, and Fee Drag %.
+5. **Dynamic Position Sizing Calculator**: Interactive risk sliders, symbol pickers, leverage selection, and BNB fee deduction toggle for instant mathematical previews.
+6. **Placed Trades Database Table**: Real-time search, status filtering (`OPEN`, `CLOSED`, `TP_HIT`, `SL_HIT`), and one-click manual close modal with live net PnL calculations.
+7. **🎯 Interactive "Place Trade" Modal**: Review multi-timeframe confirmation cards (`15m`, `1h`, `4h`), confluence badges, and execute orders with pre-trade risk verification.
+8. **🔬 Deep Dive Inspection Modal**: Inspect technical indicator values, macro chart patterns, fundamental tokenomics, news headlines, and risk reviewer feedback for any coin.
 
 ---
 
-## 13. Summary Cheat Sheet & FAQ
+## 14. Summary Cheat Sheet & FAQ
 
 * **What programming language is used?** Python 3.11+ with FastAPI, Pydantic v2, and CCXT.
 * **What AI models are supported?** NVIDIA NIM (`nvidia/nemotron-3.5-lightning-30b-a3b` default via OpenAI-compatible SDK) and Anthropic Claude (`claude-sonnet-4-20250514`), with automatic fallback to deterministic math if no API key is set.
 * **How does Multi-Timeframe Analysis work?** It evaluates `15m`, `1h`, and `4h` timeframes simultaneously, requiring alignment between the macro trend (4h) and trigger (15m) before applying confidence boosts.
+* **How are exchange fees handled?** Binance VIP-0 Maker/Taker fees, BNB deduction discounts (25% Spot, 10% Futures), and 0.02% slippage are modeled on every trade to compute true Net Expectancy.
 * **Where does market data come from?** Binance (Spot & USD-M Futures) via CCXT, CoinGecko for fundamental metrics, and crypto.news for RSS news feeds.
-* **Where is data stored?** Supabase cloud database (`articles` and `signals` tables).
-* **How many strategies and tests exist?** 20 distinct quantitative strategies and **39 automated unit & regression tests** in `tests/test_regressions.py`.
+* **Where is data stored?** Supabase cloud database (`articles`, `signals`, and `trades` tables).
+* **How many strategies and tests exist?** 20 distinct quantitative strategies and **57 automated unit & regression tests** (100% passing).
 * **How do I launch the platform?**
   ```bash
   # 1. Start the Web Dashboard
