@@ -4,11 +4,12 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)](https://fastapi.tiangolo.com)
 [![NVIDIA NIM](https://img.shields.io/badge/AI_Engine-NVIDIA_Nemotron_/_Claude-76B900.svg)](https://www.nvidia.com/en-us/ai-data-science/products/nim/)
 [![Supabase](https://img.shields.io/badge/Database-Supabase_Cloud-3ECF8E.svg)](https://supabase.com)
+[![Tests Passing](https://img.shields.io/badge/Tests-57%20Passed-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-grade, asynchronous, multi-agent cryptocurrency market analysis and trade signal generation platform written in Python. The system analyzes both **Spot** (long-only) and **Perpetual Futures** (long/short with leverage) markets using real-time market data, **Multi-Timeframe Analysis (MTFA)** across `15m`, `1h`, and `4h` candles, 18 technical indicators, 10 macro chart patterns, 9 Japanese candlestick patterns, Smart Money Concepts (SMC / ICT), Elliott Wave impulse theory, fundamental tokenomics, news sentiment analysis, and futures derivatives metrics.
+A production-grade, asynchronous, multi-agent cryptocurrency market analysis, money risk management, and trade execution platform written in Python 3.11+. The system analyzes both **Spot** (long-only) and **Perpetual Futures** (long/short with leverage up to 500x) markets using real-time market data, **Multi-Timeframe Analysis (MTFA)** across `15m`, `1h`, and `4h` candles, 18 technical indicators, 10 macro chart patterns, 9 Japanese candlestick patterns, Smart Money Concepts (SMC / ICT), Elliott Wave impulse theory, fundamental tokenomics, news sentiment analysis, and futures derivatives metrics.
 
-Featuring a secured embedded **real-time WebSocket Web Dashboard** with `.env` authentication, an interactive **Trade Placement & Execution Modal**, and a **CLI Analysis Tool**, the engine orchestrates specialist AI agents, runs deterministic consensus across 20 trading strategies, enforces strict hard-coded risk management gates, and streams live executable trade signals.
+Featuring an institutional-grade **Money & Risk Management Control Center**, **Binance VIP-0 Fee & Slippage Friction Engine**, an 8-rule deterministic **Hard-Risk Gate**, an interactive **Trade Placement & Execution Modal**, a persistent **Placed Trades Database**, and a secured **Real-Time WebSocket Web Dashboard** with `.env` authentication, the engine orchestrates specialist AI agents, runs deterministic consensus across 20 quantitative trading strategies, and ensures long-term positive mathematical expectancy net of all exchange fees.
 
 ---
 
@@ -21,12 +22,14 @@ Featuring a secured embedded **real-time WebSocket Web Dashboard** with `.env` a
 - [⏱️ Multi-Timeframe Analysis (MTFA) Engine](#️-multi-timeframe-analysis-mtfa-engine)
 - [📊 Technical Analysis, SMC/ICT & Elliott Wave Engine](#-technical-analysis-smcict--elliott-wave-engine)
 - [🎯 20 Deterministic Strategies & Consensus Engine](#-20-deterministic-strategies--consensus-engine)
-- [🛡️ Deterministic Hard-Risk Gate Guard (7 Rules)](#️-deterministic-hard-risk-gate-guard-7-rules)
+- [🛡️ Deterministic Hard-Risk Gate Guard (8 Rules)](#️-deterministic-hard-risk-gate-guard-8-rules)
+- [💰 Money & Risk Management & Binance Fee Calculation Engine](#-money--risk-management--binance-fee-calculation-engine)
 - [🚀 Quick Start & Installation](#-quick-start--installation)
 - [💻 Usage Guide](#-usage-guide)
   - [1. Web Dashboard Server](#1-run-web-dashboard-server)
-  - [2. Interactive Trade Placement Modal](#2-interactive-trade-placement-modal)
-  - [3. CLI Single-Shot Runner](#3-run-cli-single-shot-analysis)
+  - [2. Money & Risk Management Control Center](#2-money--risk-management-control-center)
+  - [3. Interactive Trade Placement & Execution](#3-interactive-trade-placement--execution)
+  - [4. CLI Single-Shot Runner](#4-run-cli-single-shot-analysis)
 - [🔌 API & WebSocket Documentation](#-api--websocket-documentation)
 - [⚙️ Configuration Reference](#️-configuration-reference)
 - [🧪 Testing & Quality Assurance](#-testing--quality-assurance)
@@ -36,14 +39,26 @@ Featuring a secured embedded **real-time WebSocket Web Dashboard** with `.env` a
 
 ## 🌟 Key Features
 
-- **🔒 Dashboard Authentication & Security**:
-  - Secured web interface with credentials configured via `.env` (`DASHBOARD_USERNAME` & `DASHBOARD_PASSWORD`).
-  - Sleek, dark glassmorphism Login Overlay with password toggle, persistent session state (`sessionStorage`), session verification endpoint (`/api/verify-session`), and one-click **Logout**.
+- **💼 Money & Risk Management Control Center (`risk_manager.py`)**:
+  - **Dynamic Position Sizing**: Fixed Fractional model calculating required notional position size and margin based on total account equity, stop-loss distance %, and risk allocation (e.g. 1–2%).
+  - **Kelly Criterion Optimizer**: Computes Full-Kelly, Half-Kelly (safer standard), and Quarter-Kelly mathematical bankroll growth fractions.
+  - **Pre-Trade Portfolio Risk Audit**: 8-stage pre-execution safety inspection verifying capital availability, single-trade risk caps, asset concentration limits (max 2 positions per asset), maximum concurrent open positions (default 5), portfolio leverage limits, and net-of-fee R:R hurdles before writing orders to the database.
+  - **Comprehensive Portfolio Metrics**: Real-time tracking of margin utilization %, open risk exposure ($ and %), gross vs. net realized PnL, win rate %, net profit factor, maximum drawdown % curve, daily PnL, and cumulative Binance trading fee drag.
+
+- **⚡ Binance Trading Fee, Slippage & Net Expectancy Engine (`fee_calculator.py`)**:
+  - Exact exchange friction modeling using Binance VIP-0 Tier fees: Spot (0.10% Maker / 0.10% Taker) and USDⓈ-M Futures (0.02% Maker / 0.05% Taker).
+  - Binance BNB fee deduction discounts (25% discount on Spot, 10% discount on Futures).
+  - Realistic execution slippage buffer (0.02%) and round-trip commission drag on leveraged notional position sizes.
+  - Mathematical Net Expectancy ($EV$), Net Risk-to-Reward (Net R:R), Net Est. ROI %, and Fee-Trap filtering to prevent opening trades where exchange commissions consume >25% of gross profits.
+
+- **🛡️ 8 Deterministic Hard-Risk Gate Rules (`risk_gate.py`)**:
+  - Code-level mathematical safety rules with **zero LLM involvement**.
+  - Enforces direction alignment, RSI bounds (>75 overbought, <25 oversold), Stochastic bounds (>85 / <15), minimum Gross R:R floor, strict price ordering ($SL < Entry < TP$ for Long, $TP < Entry < SL$ for Short), maximum leverage caps (up to 500x), liquidation distance buffers ($\ge 15\%$), extreme funding rate protections ($\pm 0.05\%$), HOLD safety, and **Rule 8: Binance Fee & Net Expectancy Guard** (Net R:R $\ge 1.8:1$, $EV > \$0$).
 
 - **🧠 Multi-Agent AI Architecture**:
   - **Technical Analysis Agent**: Evaluates multi-timeframe trends, 18 indicators, 10 macro patterns, 9 candlestick patterns, SMC/ICT structures, and Elliott Waves.
   - **Market News Agent**: Scrapes and analyzes real-time sentiment from news streams using RSS/sitemap feeds.
-  - **Fundamental Analysis Agent**: Scores token metrics, FDV, market cap, supply ratios, and developer commits via CoinGecko.
+  - **Fundamental Analysis Agent**: Scores token metrics, FDV, market cap, supply ratios, and developer commits via CoinGecko (0–100 score).
   - **Futures Derivatives Agent**: Evaluates 8h funding rates, open interest trends, long/short account ratios, and liquidation buffers.
   - **Trading Coordinator Agent**: Synthesizes inputs and user risk parameters into executable trade plans with position sizing math.
   - **LLM Risk Reviewer Agent**: Independent "devil's advocate" AI validating trade logic, checking contradictions, and adjusting confidence.
@@ -54,41 +69,33 @@ Featuring a secured embedded **real-time WebSocket Web Dashboard** with `.env` a
     - **4h (Higher Timeframe / Macro Trend Filter)**: 40% weighting.
     - **1h (Intermediate Timeframe / Primary Setup)**: 40% weighting.
     - **15m (Lower Timeframe / Execution Trigger)**: 20% weighting.
-  - Generates confluence status classifications: `FULL_CONFLUENCE` (+10% confidence boost), `STRONG_CONFLUENCE` (+6% boost), `MODERATE` (neutral), `CONFLICTING` (-10% penalty), and `UNAVAILABLE`.
+  - Confluence status classifications: `FULL_CONFLUENCE` (+10% confidence boost), `STRONG_CONFLUENCE` (+6% boost), `MODERATE` (neutral), `CONFLICTING` (-10% penalty), and `UNAVAILABLE`.
 
-- **🎯 Interactive Trade Placement & Execution**:
-  - Click any actionable signal card to open the interactive **"Place Trade" Modal**.
-  - Visualizes complete position sizing calculations: Margin Bet ($), Leverage Multiplier, Total Position Size ($), Max Risk at Stop-Loss (-$Risk), Target Profit (+$Profit), and Estimated ROI (`est_roi_pct`).
-  - Renders live Multi-Timeframe Cards (`15m`, `1h`, `4h`) displaying individual Bias, Trend, and RSI values alongside a Confluence Badge.
-  - Simulates or dispatches trade orders via `POST /api/place-trade` with instant order receipt generation.
+- **🎯 Interactive Trade Placement & Placed Trades Database**:
+  - Click any actionable signal card to launch the **"Place Trade" Modal** with live multi-timeframe cards (`15m`, `1h`, `4h`) and confluence badges.
+  - Dispatch orders via `POST /api/place-trade`, run pre-trade risk audit, persist records into Supabase `trades` table, and generate instant order receipts.
+  - Search, filter, and review placed trades in real time by symbol, market type, status (`OPEN`, `CLOSED`, `TP_HIT`, `SL_HIT`), and keyword.
+  - Manual **"Close Position" Modal** with real-time exit price simulation and net realized PnL calculations after deducting entry and exit Binance commissions.
 
 - **📊 Comprehensive Technical, Market Structure & Candlestick Engine**:
-  - **18 Technical Indicators**: EMA Crossovers, SMA, RSI, MACD, Bollinger Bands, Support/Resistance Pivot Points, RSI Divergence, Stochastic Oscillator (%K/%D), ATR, VWAP, Supertrend, Keltner Channels & Squeeze, On-Balance Volume (OBV), Ichimoku Cloud, ADX (+DI/-DI), Money Flow Index (MFI), Parabolic SAR, and Fair Value Gaps (FVG).
+  - **18 Technical Indicators**: EMA Crossover, SMA, RSI, MACD, Bollinger Bands, Support/Resistance Pivots, RSI Divergence, Stochastic Oscillator, ATR, VWAP, Supertrend, Keltner Channels & Squeeze, OBV, Ichimoku Cloud, ADX (+DI/-DI), MFI, Parabolic SAR, Fair Value Gaps (FVG).
   - **10 Macro Chart Patterns**: Double Top, Double Bottom, Head & Shoulders, Inverse Head & Shoulders, Ascending Triangle, Descending Triangle, Symmetrical Triangle, Rising Wedge, Falling Wedge, Bull Flag.
-  - **9 Japanese Candlestick Patterns**: Doji (Standard, Dragonfly, Gravestone), Hammer / Inverted Hammer / Hanging Man / Shooting Star, Marubozu (Bullish/Bearish), Engulfing (Bullish/Bearish), Harami (Bullish/Bearish), Piercing Line & Dark Cloud Cover, Tweezers (Top/Bottom), Star Patterns (Morning Star/Evening Star), Three White Soldiers & Three Black Crows.
-  - **SMC / ICT Structure**: Swing liquidity pools and sweeps, BOS / ChoCH events, Order Blocks, Fair Value Gaps, Premium/Discount zones, Optimal Trade Entry (OTE 62%-79%), and UTC session kill-zones (London, New York, Asia).
-  - **Elliott Wave**: Deterministic 1-2-3-4-5 impulse validation, strict hard-rule verification (W2 > W1 origin, W3 not shortest, W4 no overlap W1, progressive extremes), Fibonacci retracements/extensions, invalidation levels, and RSI momentum confirmation.
+  - **9 Candlestick Pattern Families**: Doji (Standard, Dragonfly, Gravestone), Hammer / Inverted Hammer / Hanging Man / Shooting Star, Marubozu, Engulfing, Harami, Piercing Line & Dark Cloud Cover, Tweezers, Star Patterns, Three Soldiers & Crows.
+  - **SMC / ICT & Elliott Wave**: Confirmed swing pivots, BOS/ChoCH, Liquidity sweeps, Order Blocks, Premium/Discount & OTE (62%–79%), UTC session kill-zones, and deterministic 1-2-3-4-5 impulse validation with Fibonacci extensions.
 
 - **🎯 20 Deterministic Strategies & Consensus Engine**:
-  - Executes 20 distinct quantitative strategies and computes confidence-weighted voting.
-  - Requires a **60% majority consensus** and at least **5 agreeing strategies** before generating trade signals.
-
-- **🛡️ Deterministic Hard-Risk Gate Guard (7 Rules)**:
-  - Strict code-level mathematical safety rules with **zero LLM involvement**.
-  - Enforces direction alignment, RSI bounds (>75 overbought, <25 oversold), Stochastic bounds (>85 / <15), minimum Risk-to-Reward ratio floor, strict price ordering (SL < Entry < TP or TP < Entry < SL), maximum leverage caps, liquidation distance buffers (≥15%), and extreme funding rate protections.
-
-- **🪙 Memecoin Symbol Normalization**:
-  - Automatic futures contract symbol translation for Binance derivatives (e.g., `PEPEUSDT` $\to$ `1000PEPEUSDT`, `SHIBUSDT` $\to$ `1000SHIBUSDT`, `FLOKI`, `BONK`, `LUNC`, etc.).
+  - Executes 20 quantitative strategies and computes confidence-weighted voting.
+  - Requires **60% majority consensus** and at least **5 agreeing strategies** to trigger signals.
 
 - **⚡ Real-Time WebSocket Web Dashboard**:
-  - Modern Single Page Application (SPA) with dark glassmorphism UI built with Tailwind CSS.
-  - Real-time WebSocket streaming feed (`/ws`) broadcasting price updates, scan results, multi-timeframe reports, and multi-agent summaries.
-  - Interactive risk controls: target minimum R:R ratio, margin bet amount ($10 USD default), and leverage multiplier.
-  - Live instant search across Top 50 monitored cryptocurrency pairs.
-  - Modal inspection popups displaying technical summaries, fundamental scores, sentiment breakdowns, derivatives metrics, and risk reviewer feedback.
+  - Dark glassmorphism Single Page Application (SPA) with Tailwind CSS.
+  - Navigation switcher between **Market Signals** and **Money & Risk Management** views.
+  - Real-time WebSocket feed (`/ws`) broadcasting price snapshots, signal updates, trade executions, and news crawler alerts.
+  - Interactive risk controls: target R:R, margin bet amount ($10 USD default), and leverage selector (1x to 500x).
+  - Modal inspection popups for multi-agent deep dives, trade execution, position closure, and risk limit configuration.
 
 - **💾 Supabase Cloud Database Persistence**:
-  - Cloud database integration via `supabase-py` for persisting news articles, full-text search indexing, and historical trade signals.
+  - PostgreSQL schema with Row-Level Security (RLS) for storing news articles, full-text search indexing, historical trade signals, and live executed trade orders.
 
 ---
 
@@ -99,17 +106,19 @@ my-ai-crypto-bot/
 ├── main.py               # Application launcher & CLI single-shot runner
 ├── server.py             # FastAPI web server, Auth APIs, WebSocket manager & dashboard UI
 ├── pipeline.py           # Master orchestration pipeline (create_trade_plan & MTFA fetch)
-├── risk_gate.py          # Deterministic 7-rule hard risk gate guard
-├── config.py             # Global settings, API endpoints, MTFA thresholds, risk parameters
-├── models.py             # Pydantic v2 data schemas & blueprints for signals, MTFA & reports
-├── database.py           # Supabase cloud database manager (articles & signals)
+├── risk_manager.py       # Money & Risk Management Engine (Position sizing, Kelly, Pre-trade audit)
+├── fee_calculator.py     # Binance trading fee, BNB discount, slippage & net expectancy engine
+├── risk_gate.py          # Deterministic 8-rule hard risk gate guard
+├── config.py             # Global settings, API endpoints, fee structures, risk parameters
+├── models.py             # Pydantic v2 data schemas (TradeSignal, PlacedTrade, PortfolioMetrics)
+├── database.py           # Supabase cloud database manager (articles, signals, and trades)
 ├── crawler.py            # Async web scraper for crypto news (RSS & sitemaps)
 ├── ccxt_client.py        # CCXT market data client (Multi-TF parallel fetching & Binance Futures)
 ├── indicators.py         # 18 Indicators, 10 Macro Patterns, 9 Candlestick Detectors, MTFA Engine
 ├── market_structure.py   # Deterministic SMC/ICT & Elliott Wave impulse analysis
 ├── fundamentals.py       # CoinGecko metrics scraper & fundamental health scorer (0-100)
 ├── strategies.py         # 20 Deterministic trading strategies & Consensus Engine
-├── schema.sql            # PostgreSQL / Supabase table definitions
+├── schema.sql            # PostgreSQL / Supabase table definitions (articles, signals, trades)
 ├── requirements.txt      # Python dependencies
 ├── agents/               # Specialist AI Agents
 │   ├── __init__.py       # Package initialization
@@ -120,9 +129,11 @@ my-ai-crypto-bot/
 │   ├── fund_agent.py     # Fundamental Analysis Agent
 │   ├── futures_agent.py  # Futures Derivatives Agent
 │   └── risk_reviewer.py  # Independent LLM Risk Review Agent
-└── tests/                # Automated test suite
+└── tests/                # Automated test suite (57 passing tests)
     ├── __init__.py
-    └── test_regressions.py # 39 Comprehensive regression & unit tests
+    ├── test_regressions.py   # 41 Multi-agent, MTFA, indicator, model & system regression tests
+    ├── test_fee_calculator.py # 8 Binance fee, BNB discount & net expectancy unit tests
+    └── test_risk_manager.py   # 8 Position sizing, Kelly criterion & risk audit unit tests
 ```
 
 ---
@@ -132,7 +143,7 @@ my-ai-crypto-bot/
 ```mermaid
 flowchart TD
     subgraph MarketData ["1. Multi-Source Real-Time Market Ingestion"]
-        MD1["Binance Spot & USD-M Futures (CCXT)<br/>Parallel Fetch: 15m, 1h, 4h"]
+        MD1["Binance Spot & USD-M Futures (CCXT)<br/>Parallel Fetch: 15m, 1h, 4h OHLCV"]
         MD2["CoinGecko Tokenomics API"]
         MD3["Async Web Scraper / RSS (crypto.news)"]
     end
@@ -154,20 +165,22 @@ flowchart TD
 
     subgraph ConsensusLayer ["4. Strategy Consensus & Synthesis"]
         CS1["20 Deterministic Strategies Consensus Engine"]
-        CS2["Master Trading Coordinator Agent<br/>(Entry, TP, SL, R:R, Position Sizing, Safe Leverage)"]
+        CS2["Master Trading Coordinator Agent<br/>(Entry, TP, SL, Gross R:R, Safe Leverage)"]
     end
 
-    subgraph RiskValidation ["5. Risk Review & Hard Safety Gate"]
+    subgraph RiskValidation ["5. Fee Modeling & Hard Safety Gate"]
         RV1["Independent LLM Risk Reviewer Agent (Devil's Advocate)"]
-        RV2{"Deterministic Hard-Risk Gate Guard<br/>(7 Mathematical Code-Level Rules)"}
+        RV2["Binance Fee & Friction Engine<br/>(`fee_calculator.py`: VIP-0 Fees, BNB Discount, Net Expectancy)"]
+        RV3{"Deterministic Hard-Risk Gate Guard<br/>(8 Mathematical Code-Level Rules)"}
     end
 
-    subgraph ExecutionLayer ["6. UI, Trade Placement & Streaming Delivery"]
+    subgraph ExecutionLayer ["6. UI, Risk Management & Trade Placement"]
         OUT1["Live WebSocket Broadcast (`/ws`)"]
-        OUT2["Interactive Web Dashboard & Place Trade Modal"]
-        OUT3["CLI Terminal Single-Shot Output"]
-        OUT4["Supabase Cloud Database Persistence"]
-        OUT5["Trade Execution Endpoint (`POST /api/place-trade`)"]
+        OUT2["Interactive Web Dashboard (Signals & Risk Management Tabs)"]
+        OUT3["Dynamic Position Sizer & Kelly Engine (`risk_manager.py`)"]
+        OUT4["Pre-Trade Risk Audit (Capital, Leverage, Exposure Caps)"]
+        OUT5["Supabase Cloud Database Persistence (`signals` & `trades`)"]
+        OUT6["Trade Execution & Manual Close (`/api/place-trade`, `/api/trades/close`)"]
     end
 
     MD1 --> AL0 & AL1 & AL2 & AL3 & AL4
@@ -181,25 +194,25 @@ flowchart TD
     CS1 --> CS2
     CS2 --> RV1
     RV1 --> RV2
+    RV2 --> RV3
 
-    RV2 -- "Passed (All 7 Rules OK)" --> OUT1 & OUT2 & OUT3 & OUT4
-    RV2 -- "Blocked (Violations Logged)" --> OUT1 & OUT2 & OUT3 & OUT4
-    OUT2 --> OUT5
+    RV3 -- "Passed (All 8 Rules OK)" --> OUT1 & OUT2 & OUT5
+    RV3 -- "Blocked (Violations Logged)" --> OUT1 & OUT2 & OUT5
+
+    OUT2 --> OUT3 --> OUT4 --> OUT6 --> OUT5
 ```
 
 ---
 
 ## 🧠 Multi-Agent AI System Breakdown
 
-The architecture deploys specialist agents that analyze distinct market dimensions concurrently before a coordinator drafts the trade plan:
-
 | Agent | Module | Primary Responsibilities | Data Sources / Tools |
 |---|---|---|---|
 | **Technical Analysis Agent** | [`agents/tech_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/tech_agent.py) | Computes multi-timeframe reports (15m, 1h, 4h), 18 indicators, scans 10 macro patterns and 9 candlestick patterns, evaluates SMC/ICT structures and Elliott Waves, runs strategy consensus. | Binance OHLCV via CCXT, `indicators.py`, `market_structure.py`, `strategies.py` |
-| **Market News & Sentiment Agent** | [`agents/news_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/news_agent.py) | Analyzes recent news articles, scores sentiment from `-1.0` (panic) to `+1.0` (euphoria), and extracts major catalysts. | Supabase article database, `crawler.py` (crypto.news RSS/sitemaps) |
-| **Fundamental Analysis Agent** | [`agents/fund_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/fund_agent.py) | Evaluates tokenomics, FDV ratio, market cap rank, volume/MC ratio, circulating supply, and GitHub commits (0-100 score). | CoinGecko API v3, `fundamentals.py` |
+| **Market News & Sentiment Agent** | [`agents/news_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/news_agent.py) | Scrapes and analyzes recent news articles, scores sentiment from `-1.0` (panic) to `+1.0` (euphoria), and extracts major catalysts. | Supabase article database, `crawler.py` (crypto.news RSS/sitemaps) |
+| **Fundamental Analysis Agent** | [`agents/fund_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/fund_agent.py) | Evaluates tokenomics, FDV ratio, market cap rank, volume/MC ratio, circulating supply, and GitHub commits (0–100 score). | CoinGecko API v3, `fundamentals.py` |
 | **Futures Derivatives Agent** | [`agents/futures_agent.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/futures_agent.py) | Monitors 8h funding rates, 24h Open Interest change %, Long/Short account ratios, liquidation distance buffers, and crowd traps. | Binance Futures REST (`fapi/v1`) & CCXT |
-| **Trading Coordinator Agent** | [`agents/coordinator.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/coordinator.py) | Synthesizes all agent reports, incorporates user risk inputs (target R:R, margin bet $, leverage), calculates entry/TP/SL and position sizing math. | All specialist reports, `models.py` |
+| **Trading Coordinator Agent** | [`agents/coordinator.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/coordinator.py) | Synthesizes all specialist reports, incorporates user risk inputs (target R:R, margin bet $, leverage), calculates entry/TP/SL, gross R:R, safe leverage, and position sizing math. | All specialist reports, `models.py` |
 | **LLM Risk Reviewer Agent** | [`agents/risk_reviewer.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/agents/risk_reviewer.py) | Independent validator acting as a "devil's advocate"; inspects cross-agent contradictions, adjusts confidence, and flags discrepancies. | Coordinator Draft + Specialist Reports |
 
 ---
@@ -332,13 +345,13 @@ $$\text{Consensus Requirement} = (\text{Weight Pct} \ge 60\%) \land (\text{Agree
 
 ---
 
-## 🛡️ Deterministic Hard-Risk Gate Guard (7 Rules)
+## 🛡️ Deterministic Hard-Risk Gate Guard (8 Rules)
 
-Regardless of agent consensus or AI recommendations, `risk_gate.py` evaluates every signal against **7 strict mathematical rules**. If any rule fails, the signal is marked `executable = False` and violations are recorded:
+Regardless of agent consensus or AI recommendations, `risk_gate.py` evaluates every signal against **8 strict mathematical rules**. If any rule fails, the signal is marked `executable = False` and violations are recorded:
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        🛡️ THE 7 UNBREAKABLE HARD-RISK RULES                             │
+│                        🛡️ THE 8 UNBREAKABLE HARD-RISK RULES                             │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
 │ RULE 1: Direction Alignment    │ Spot markets must NEVER issue SELL_SHORT signals.     │
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
@@ -348,7 +361,7 @@ Regardless of agent consensus or AI recommendations, `risk_gate.py` evaluates ev
 │ RULE 3: Stochastic Guard       │ Block BUY_LONG if %K > 85.0 (Stochastic Overbought).  │
 │                                │ Block SELL_SHORT if %K < 15.0 (Stochastic Oversold).  │
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
-│ RULE 4: Minimum R:R Threshold  │ Reward-to-Risk ratio must meet max(1.5, target_min_rr)│
+│ RULE 4: Minimum Gross R:R      │ Reward-to-Risk ratio must meet max(1.5, target_min_rr)│
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
 │ RULE 5: Strict Price Order     │ Long trades require: Stop-Loss < Entry < Take-Profit  │
 │                                │ Short trades require: Take-Profit < Entry < Stop-Loss │
@@ -359,8 +372,63 @@ Regardless of agent consensus or AI recommendations, `risk_gate.py` evaluates ev
 │                                │ 6c. Block trades against extreme funding rates (>0.05%)│
 ├────────────────────────────────┼───────────────────────────────────────────────────────┤
 │ RULE 7: HOLD Safety Guard      │ Neutral / HOLD signals are NEVER marked executable.   │
+├────────────────────────────────┼───────────────────────────────────────────────────────┤
+│ RULE 8: Binance Fee & Net      │ 8a. Net Risk-to-Reward ratio must be >= 1.80 : 1      │
+│         Expectancy Guard       │ 8b. Net Expected Value (EV) must be positive (> $0)   │
+│                                │ 8c. Fee drag cannot consume > 25% of gross profit.    │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 💰 Money & Risk Management & Binance Fee Calculation Engine
+
+### 1. Binance Trading Fee & Friction Modeling (`fee_calculator.py`)
+
+Trading fees on leveraged perpetual futures are assessed on the **leveraged notional position size ($)** rather than the margin deposit. Unchecked fee drag can turn a seemingly profitable system into a losing one:
+
+- **Binance VIP-0 Rates**:
+  - Spot Maker: `0.100%` (`0.0010`) | Spot Taker: `0.100%` (`0.0010`)
+  - Futures Maker: `0.020%` (`0.0002`) | Futures Taker: `0.050%` (`0.0005`)
+- **BNB Fee Deduction Discounts**:
+  - Spot with BNB: **25% discount** (`0.075%` Maker/Taker)
+  - Futures with BNB: **10% discount** (`0.018%` Maker / `0.045%` Taker)
+- **Execution Slippage Buffer**: `0.02%` (`0.0002`) applied to entry and exit orders.
+
+$$\text{Entry Fee (\$)} = \text{Position Size (\$) } \times \text{Taker Rate}$$
+$$\text{Exit Fee (\$)} = \left(\frac{\text{Position Size}}{\text{Entry Price}} \times \text{Exit Price}\right) \times \text{Taker Rate}$$
+$$\text{Total Round-Trip Fees (\$)} = \text{Entry Fee} + \text{Exit Fee} + \text{Slippage}$$
+$$\text{Net Target Profit (\$)} = \text{Gross Target Profit (\$)} - \text{Total Fees at TP}$$
+$$\text{Net Max Risk (\$)} = \text{Gross Max Risk (\$)} + \text{Total Fees at SL}$$
+$$\text{Net Risk-to-Reward Ratio} = \frac{\text{Net Target Profit}}{\text{Net Max Risk}}$$
+$$\text{Net Expected Value (EV)} = (0.50 \times \text{Net Target Profit}) - (0.50 \times \text{Net Max Risk})$$
+$$\text{Fee Drag (\%)} = \left(\frac{\text{Total Fees}}{\text{Gross Target Profit}}\right) \times 100\%$$
+
+### 2. Dynamic Position Sizing Models (`risk_manager.py`)
+
+#### Fixed Fractional Model:
+Calculates exact notional position size based on user risk tolerance:
+$$\text{Dollar Risk Target (\$)} = \text{Account Equity (\$)} \times \left(\frac{\text{Risk \%}}{100}\right)$$
+$$\text{Stop-Loss Distance \%} = \frac{|\text{Entry Price} - \text{Stop-Loss}|}{\text{Entry Price}}$$
+$$\text{Recommended Notional Position Size (\$)} = \frac{\text{Dollar Risk Target (\$)}}{\text{Stop-Loss Distance \%}}$$
+$$\text{Required Margin Deposit (\$)} = \frac{\text{Recommended Notional Position Size}}{\text{Leverage}}$$
+
+#### Kelly Criterion Model:
+Calculates optimal bankroll growth fraction:
+$$K\% = W - \frac{1 - W}{R}$$
+$$\text{Half-Kelly (Safer Standard)} = \frac{K\%}{2}, \quad \text{Quarter-Kelly} = \frac{K\%}{4}$$
+*(Where $W$ = Win Rate fraction, $R$ = Average Win/Loss dollar payout ratio)*
+
+### 3. Pre-Trade Portfolio Risk Audit
+Before any trade is confirmed or recorded to the Supabase database, `risk_manager.py` verifies 8 constraints:
+1. **Action & Market Verification**: SPOT cannot issue SHORT orders; HOLD orders are rejected.
+2. **Strict Price Ordering**: Verifies $SL < Entry < TP$ (Long) or $TP < Entry < SL$ (Short).
+3. **Maximum Open Positions**: Caps concurrent open trades to `max_open_positions` (default 5).
+4. **Asset Concentration**: Limits active trades to a maximum of 2 positions on the same coin.
+5. **Capital Availability**: Confirms $\text{Open Margin} + \text{New Margin} \le \text{Account Balance}$.
+6. **Portfolio Leverage Cap**: Confirms total portfolio notional exposure $\le \text{Account Balance} \times \text{Max Leverage}$ (default 10x).
+7. **Single Trade Risk Cap**: Ensures dollar loss at stop-loss does not breach maximum allowable risk budget.
+8. **Net-of-Fee Expectancy**: Verifies that after exchange commissions, the Net R:R $\ge 1.8:1$.
 
 ---
 
@@ -442,38 +510,49 @@ Open your browser and navigate to:
 
 1. Enter your credentials (`DASHBOARD_USERNAME` & `DASHBOARD_PASSWORD` from `.env`).
 2. Click **Unlock Dashboard** to access the live market control center.
-3. Features:
-   - **Real-Time Scanning**: Live price and signal updates across Top 10 default / Top 50 total cryptocurrency pairs.
-   - **Interactive Risk Sizing**: Adjust Target R:R (e.g., 2.0x, 3.0x), Margin Bet Amount (e.g., $10 USD default), and Leverage Multiplier.
-   - **Live Instant Search**: Search any coin pair on demand with immediate feedback.
-   - **Multi-Agent Deep Dive**: Click any signal card to open a modal inspection window detailing indicator values, candlestick patterns, fundamental tokenomics, news sentiment, and risk reviewer feedback.
-   - **News Scraper Controls**: Trigger on-demand news crawls and view stored articles.
-   - **Logout**: Lock the control center at any time.
+3. Switch seamlessly between the **Market Signals** tab and the **Money & Risk Management** tab.
 
 ---
 
-### 2. Interactive Trade Placement Modal
+### 2. Money & Risk Management Control Center
+
+Click the **"Money & Risk Management"** tab in the dashboard navigation bar to access institutional portfolio management:
+
+- **6-Column Portfolio Risk Telemetry**:
+  - **Account Balance & Available Margin**: Live collateral overview.
+  - **Margin Utilization %**: Dynamic color-coded utilization progress bar.
+  - **Open Risk (SL) Exposure**: Total dollars and portfolio percentage at risk across all open positions.
+  - **Net Realized PnL & Fees Paid**: Exact realized profit/loss after subtracting Binance fees.
+  - **Win Rate % & Net Profit Factor**: Win/Loss ratio and profit factor analytics.
+  - **Kelly Sizing & Fee Drag %**: Mathematical bankroll allocation guidance and fee percentage drag.
+- **Dynamic Position Sizing Calculator**:
+  - Interactive risk sliders, asset selector, leverage selector, and BNB fee deduction toggle.
+  - Instant calculations of Position Size ($), Required Margin ($), Base Quantity, Max Risk ($), Gross Profit ($), Est. Round-Trip Fees ($), Net Profit ($), Net R:R, Break-Even Win Rate %, Net Expectancy ($EV$), and Liquidation Distance.
+  - Click **"🎯 Apply Sizing & Place Trade"** to transfer values directly into the order execution flow.
+- **Placed Trades Database Manager**:
+  - Search and filter all placed trades in real time by search query, status (`OPEN`, `CLOSED`, `TP_HIT`, `SL_HIT`), or market type (`SPOT`, `FUTURES`).
+  - Click **"Close"** on any open position to open the **Manual Closure Modal**, enter the exit price, review estimated Binance commissions and net realized PnL in real time, and persist results to Supabase.
+- **Risk Limits Configuration Modal**:
+  - Configure Account Capital ($), Max Risk Per Trade (%), Minimum Net R:R, Max Fee Drag %, Max Portfolio Leverage, and Max Concurrent Open Positions.
+
+---
+
+### 3. Interactive Trade Placement & Execution
 
 Click the glowing **"🎯 Place Trade"** button on any executable signal card to launch the trade execution modal:
 
-- **Mathematical Position Breakdown**:
-  - **Entry, Take-Profit, and Stop-Loss Prices**
-  - **Risk-to-Reward Ratio ($R:R$)**
-  - **Margin Bet Amount ($)** vs. **Total Position Size ($)**
-  - **Max Dollar Risk at Stop-Loss** and **Target Profit Goal**
-  - **Estimated Return on Investment (`est_roi_pct`)**
 - **Multi-Timeframe Status Cards**:
   - `15m` Card: Lower Timeframe Entry Trigger bias, trend, and RSI.
   - `1h` Card: Intermediate Primary Setup bias, trend, and RSI.
   - `4h` Card: Higher Timeframe Macro Filter bias, trend, and RSI.
   - **Confluence Badge**: Displays overall confluence % and validation status (`FULL_CONFLUENCE`, `STRONG_CONFLUENCE`, etc.).
 - **Order Execution & Receipts**:
-  - Click **"🎯 Confirm & Place Trade"** to execute order placement via `/api/place-trade`.
-  - Instantly generates an order receipt displaying `Order ID`, `Position Size`, `Leverage`, and `Timestamp`.
+  - Click **"🎯 Confirm & Place Trade"** to execute order placement via `POST /api/place-trade`.
+  - Runs pre-trade risk audit, records trade into Supabase `trades` table, broadcasts `TRADE_PLACED` over WebSockets, and generates an instant order receipt.
 
 ---
 
-### 3. Run CLI Single-Shot Analysis
+### 4. Run CLI Single-Shot Analysis
 
 Run a comprehensive single-shot market analysis directly in your terminal:
 
@@ -501,14 +580,20 @@ python main.py --cli-only --symbol ETHUSDT --market FUTURES --min-rr 2.5 --trade
 
 | Method | Endpoint | Description | Query / Body Parameters |
 |---|---|---|---|
-| `GET` | `/` | Embedded Single-Page Web Dashboard | None |
+| `GET` | `/` | Embedded Single-Page Web Dashboard UI | None |
 | `POST` | `/api/login` | Authenticate dashboard user | `{ "username": "admin", "password": "..." }` |
 | `POST` | `/api/verify-session` | Verify active session token | `{ "token": "..." }` |
 | `GET` | `/api/analyze` | Trigger instant single-pair analysis | `symbol`, `market`, `min_rr`, `trade_amount`, `leverage` |
+| `GET` | `/api/report/details` | Retrieve full multi-agent report for modal | `symbol`, `market` |
 | `POST` | `/api/start-analysis` | Start continuous market scanner | `{ "trade_amount": 10.0, "min_rr": 2.0, "leverage": 10 }` |
 | `POST` | `/api/stop-analysis` | Stop running background scanner | None |
-| `POST` | `/api/place-trade` | Place simulated / live trade execution order | `{ "symbol": "BTCUSDT", "market_type": "FUTURES", "action": "BUY_LONG", "entry_price": 65000, "take_profit": 68000, "stop_loss": 63500, "trade_amount_usd": 10.0, "leverage": 10, "timeframes_analyzed": ["15m", "1h", "4h"], "mtf_confluence_score": 85.0, "mtf_status": "FULL_CONFLUENCE" }` |
-| `GET` | `/api/report/details` | Retrieve full multi-agent report for modal | `symbol`, `market` |
+| `POST` | `/api/place-trade` | Place and record trade execution order | `{ "symbol": "BTCUSDT", "market_type": "FUTURES", "action": "BUY_LONG", "entry_price": 65000, "take_profit": 68000, "stop_loss": 63500, "trade_amount_usd": 100.0, "leverage": 10, ... }` |
+| `GET` | `/api/trades` | Search and filter trades from Supabase | `query`, `symbol`, `status`, `market_type`, `limit`, `offset` |
+| `GET` | `/api/trades/{order_id}` | Retrieve single trade record | `order_id` path parameter |
+| `POST` | `/api/trades/close` | Close open trade & calculate net realized PnL | `{ "order_id": "ORD_...", "exit_price": 67500, "notes": "..." }` |
+| `GET` | `/api/risk-management/metrics` | Retrieve portfolio capital, risk & Kelly metrics | None |
+| `POST` | `/api/risk-management/calculate` | Calculate dynamic position sizing | `{ "account_balance": 10000, "risk_pct": 2.0, "entry_price": 65000, "stop_loss": 63700, ... }` |
+| `POST` | `/api/risk-management/settings` | Update risk limits & portfolio capital | `{ "account_balance": 10000, "max_risk_per_trade_pct": 2.0, "max_portfolio_leverage": 10.0, ... }` |
 | `POST` | `/api/crawl` | Trigger on-demand news crawler | None |
 | `GET` | `/api/articles` | Retrieve stored news articles from Supabase | `limit`, `query` |
 | `GET` | `/api/signals` | Retrieve historical trade signals | `symbol`, `limit` |
@@ -519,8 +604,10 @@ python main.py --cli-only --symbol ETHUSDT --market FUTURES --min-rr 2.5 --trade
 Connect via `ws://localhost:8000/ws` for real-time bi-directional messaging:
 
 - **Server-to-Client Messages**:
-  - `SNAPSHOT`: Sent immediately on connection containing latest scan reports and coin lists.
+  - `SNAPSHOT`: Sent immediately on connection containing latest scan reports, coin lists, and timestamp.
   - `SIGNAL_UPDATE`: Broadcast whenever an updated analysis report or trade signal is generated.
+  - `TRADE_PLACED`: Broadcast when a new order is executed and recorded.
+  - `TRADE_UPDATED`: Broadcast when a position is closed or updated.
   - `NEWS_UPDATE`: Broadcast when new articles are crawled and stored.
   - `ANALYSIS_STARTED` / `ANALYSIS_STOPPED`: Broadcast when scanner state changes.
 
@@ -548,12 +635,22 @@ Key configurable parameters in [`config.py`](file:///c:/Users/acer/Desktop/My%20
 | `AI_PROVIDER` | `"nvidia"` | Selected AI provider (`"nvidia"` or `"anthropic"`) |
 | `NVIDIA_MODEL` | `"nvidia/nemotron-3.5-lightning-30b-a3b"` | NVIDIA NIM LLM model identifier |
 | `CLAUDE_MODEL` | `"claude-sonnet-4-20250514"` | Anthropic Claude LLM model identifier |
+| `BINANCE_SPOT_MAKER_FEE` | `0.0010` (0.10%) | Binance Spot Maker commission rate |
+| `BINANCE_SPOT_TAKER_FEE` | `0.0010` (0.10%) | Binance Spot Taker commission rate |
+| `BINANCE_FUTURES_MAKER_FEE` | `0.0002` (0.02%) | Binance USDⓈ-M Futures Maker commission rate |
+| `BINANCE_FUTURES_TAKER_FEE` | `0.0005` (0.05%) | Binance USDⓈ-M Futures Taker commission rate |
+| `BNB_SPOT_DISCOUNT_PCT` | `0.25` (25%) | Fee discount on Spot when using BNB |
+| `BNB_FUTURES_DISCOUNT_PCT` | `0.10` (10%) | Fee discount on Futures when using BNB |
+| `BINANCE_USE_BNB_FEE_DISCOUNT` | `True` | Apply BNB fee deduction discount by default |
+| `DEFAULT_SLIPPAGE_PCT` | `0.0002` (0.02%) | Estimated execution slippage buffer |
+| `MIN_NET_RISK_REWARD_RATIO` | `1.80` | Minimum Net R:R after all fees & slippage |
+| `MAX_FEE_TO_PROFIT_RATIO` | `0.25` (25%) | Max percentage of gross profit eaten by fees |
 | `MTF_TIMEFRAMES` | `["15m", "1h", "4h"]` | Analyzed timeframes for Multi-Timeframe Analysis |
 | `MTF_PRIMARY_TIMEFRAME` | `"1h"` | Primary intermediate setup timeframe |
 | `MTF_HTF_TIMEFRAME` | `"4h"` | Higher timeframe macro trend filter |
 | `MTF_LTF_TIMEFRAME` | `"15m"` | Lower timeframe execution trigger |
-| `MTF_CONFIRMATION_BOOST_MAX` | `0.10` | Maximum confidence boost (+10%) for multi-timeframe confluence |
-| `DEFAULT_MIN_RR` | `2.0` | Default minimum Risk-to-Reward ratio |
+| `MTF_CONFIRMATION_BOOST_MAX` | `0.10` (+10%) | Maximum confidence boost for full MTFA confluence |
+| `DEFAULT_MIN_RR` | `2.0` | Default minimum Gross Risk-to-Reward ratio |
 | `DEFAULT_TRADE_AMOUNT_USD` | `$10.0` | Default user margin bet amount per trade |
 | `DEFAULT_LEVERAGE` | `10x` | Default leverage for perpetual futures |
 | `MAX_ALLOWED_LEVERAGE` | `500x` | System maximum leverage cap |
@@ -571,18 +668,33 @@ Key configurable parameters in [`config.py`](file:///c:/Users/acer/Desktop/My%20
 
 ## 🧪 Testing & Quality Assurance
 
-The codebase includes an automated regression and integration test suite in [`tests/test_regressions.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/tests/test_regressions.py) containing **39 comprehensive tests** covering:
-- **Multi-Timeframe Analysis (MTFA)**: Single-timeframe metrics extraction, 3-timeframe confluence scoring, status determination, and dashboard dictionary serialization.
-- **Mathematical Stability**: Indicator resilience and finite output validation during flat/zero-volatility market conditions.
-- **Data Integrity**: Rejection of malformed kline data structures and error boundary protections.
-- **Smart Money Concepts (SMC / ICT)**: Fair Value Gap bounds preservation and order block zone calculations.
-- **Elliott Wave Impulse Theory**: Deterministic 1-2-3-4-5 impulse validation, hard-rule checks, and Fibonacci extensions.
-- **Specialist Agent Integration**: Technical agent reporting, multi-timeframe inclusion, and consensus model formatting.
-- **Dual LLM Provider Dispatching**: Async mock dispatch tests for NVIDIA NIM and Anthropic Claude across all specialist agents.
-- **Hard Risk Gate Enforcement**: Direction alignment, liquidation distance guards, price ordering rules, leverage caps, and HOLD safety.
-- **Server Authentication & Orders**: Login credential verification, session token persistence, and `/api/place-trade` request validation.
-- **AI Utility Robustness**: JSON extraction resilience against reasoning/thinking tags and markdown fences.
-- **Pydantic Model Validation**: DataFrame truthiness error prevention in trade plan orchestration.
+The codebase includes an automated regression and unit test suite across 3 test modules containing **57 tests** (100% passing):
+
+1. **[`tests/test_regressions.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/tests/test_regressions.py) (41 tests)**:
+   - **Multi-Timeframe Analysis (MTFA)**: Single-timeframe extraction, 3-timeframe confluence scoring, status determination, and dashboard serialization.
+   - **Mathematical Stability**: Indicator resilience and finite output validation during flat/zero-volatility market conditions.
+   - **Data Integrity**: Rejection of malformed kline data structures and error boundary protections.
+   - **Smart Money Concepts (SMC / ICT)**: Fair Value Gap bounds preservation and order block zone calculations.
+   - **Elliott Wave Impulse Theory**: Deterministic 1-2-3-4-5 impulse validation, hard-rule checks, and Fibonacci extensions.
+   - **Specialist Agent Integration**: Technical agent reporting, multi-timeframe inclusion, and consensus model formatting.
+   - **Dual LLM Provider Dispatching**: Async mock dispatch tests for NVIDIA NIM and Anthropic Claude across all specialist agents.
+   - **Hard Risk Gate Enforcement**: Direction alignment, liquidation distance guards, price ordering rules, leverage caps, and HOLD safety.
+   - **Server Authentication & Orders**: Login credential verification, session token persistence, and `/api/place-trade` request validation.
+   - **AI Utility Robustness**: JSON extraction resilience against reasoning/thinking tags and markdown fences.
+   - **Pydantic Model Validation**: DataFrame truthiness error prevention in trade plan orchestration.
+
+2. **[`tests/test_fee_calculator.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/tests/test_fee_calculator.py) (8 tests)**:
+   - Binance VIP-0 maker and taker rates for Spot and Futures.
+   - Binance BNB fee deduction discounts (25% Spot, 10% Futures).
+   - Net-of-fee target profit, net max risk, and net R:R calculations.
+   - Round-trip fee drag on leveraged notional positions.
+   - Fee-trap warnings and negative expectancy rejection.
+
+3. **[`tests/test_risk_manager.py`](file:///c:/Users/acer/Desktop/My%20Project/my-ai-crypto-bot/tests/test_risk_manager.py) (8 tests)**:
+   - Fixed fractional position sizing based on equity, SL distance, and risk %.
+   - Full-Kelly, Half-Kelly, and Quarter-Kelly capital sizing fractions.
+   - 8-step pre-trade portfolio risk audit (price ordering, capital limits, position caps, concentration limits).
+   - Live portfolio risk metrics, drawdown curve, and realized net PnL aggregation.
 
 Run the test suite:
 ```bash
